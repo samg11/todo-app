@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+    <h1>Hello {{ username }}</h1>
+
+    <form method="GET" action="/addtodo">
+        <div class="form-group">
+            <label for="todoInput">Type todo here</label>
+            <textarea name="todo" class="form-control" id="todoInput" rows="3"></textarea>
+            
+            <div class="row">
+                <div class="col-md-4 col-lg-2">
+                    <input class="btn btn-primary btn-block" type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <ul class="list-group">
+        {% for todo in todos %}
+            <li class=" todo-item list-group-item">
+                <form method="POST" action="{{ url_for('removetodo') }}">
+                    <input readonly="readonly" name="todoname" type="text" value="{{ todo }}">
+                    <input type="submit" value="Remove todo">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if num_of_todos != 1 %}
+        <p>You have {{ num_of_todos }} todos</p>
+    {% else %}
+        <p>You have {{ num_of_todos }} todo</p>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-4 col-lg-2">
+            <a href="{{ url_for('logout') }}" type="button" class="btn btn-danger btn-block">Sign Out</a>
+        </div>
+    </div>
+{% endblock %}
