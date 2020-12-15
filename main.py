@@ -20,7 +20,7 @@ def index():
         else:
             session["username"] = ""
             session["password"] = ""
-            return redirect(url_for('login'))
+            return redirect(url_for('signup'))
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -71,14 +71,16 @@ def signup():
 @app.route('/addtodo')
 def add_todo():
     todo = request.args["todo"]
-    database.submit_todo(todo, session["username"])
+    if todo.replace('\n', 'a') != todo:
+        flash('Todos must be one line')
+    else:
+        database.submit_todo(todo, session["username"])
     return redirect(url_for('index'))
 
 @app.route('/remove_todo', methods=["GET", "POST"])
 def removetodo():
     database.remove_todo(request.form["todoname"], session["username"])
     return redirect(url_for('index'))
-        
 
 @app.route('/logout')
 def logout():
