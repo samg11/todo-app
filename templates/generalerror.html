@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{% block error %}{% endblock %}{% endblock %}
+
+{% block content %}
+    <center>
+        <h1 class="display-1">
+            {% block large %}{% endblock %}
+        </h1>
+
+        <h5>{% block info %}{% endblock %}</h5>
+        <br>
+        <br>
+        <p>Click <a href="{{ url_for('index') }}">here</a> to go to the home page</p>
+        <br>
+        <p>Click <a href="{{ url_for('login') }}">here</a> to go to log in</p>
+        <br>
+        <p>Click <a href="{{ url_for('signup') }}">here</a> to go to Sign Up</p>
+    </center>
+
+{% endblock %}

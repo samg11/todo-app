@@ -1,8 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'generalerror.html' %}
 
-{% block title %}ERROR{% endblock %}
+{% block error %}Error{% endblock %}
 
-{% block content %}
-    <h1>Internal server error!</h1>
-    <h2>Please try again</h2>
-{% endblock %}
+
+{% block large %}Internal Server Error{% endblock %}
+
+{% block info %}An error has occured!{% endblock %}
