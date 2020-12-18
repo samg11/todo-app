@@ -16,29 +16,39 @@ def readSecret(key):
     return os.environ[key]
 
 def encrypt(string):
-    encoded = string.encode()
-    print(type(encoded))
-    f = Fernet(readSecret('encryptionkey'))
-    return f.encrypt(encoded).decode()
+    try:
+        encoded = string.encode()
+        f = Fernet(readSecret('encryptionkey'))
+        return f.encrypt(encoded).decode()
+
+    except:
+        print('encryption error')
 
 def decrypt(string):
-    encoded = string.encode()
-    print(type(encoded))
-    f = Fernet(readSecret('encryptionkey'))
-    decrypted = f.decrypt(encoded)
-    print(type(decrypted))
-    return decrypted.decode()
+    try:
+        encoded = string.encode()
+        f = Fernet(readSecret('encryptionkey'))
+        decrypted = f.decrypt(encoded)
+        return decrypted.decode()
+    
+    except:
+        print('decryption error')
 
 def test():
 
-    string = 'test'
-    print(string)
+    if not len(sys.argv) < 2:
+        string = sys.argv[1]
+        
+    else:
+        string = 'test'
+
+    print(f"original string:  {string}")
     
     encrypted = encrypt(string)
-    print(encrypted)
+    print(f"encrypted string: {encrypted}")
 
     decrypted = decrypt(encrypted)
-    print(decrypted.decode())
+    print(f"decrypted string: {decrypted}")
 
 if __name__ == "__main__":
     test()

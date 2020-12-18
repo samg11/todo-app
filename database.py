@@ -8,9 +8,6 @@ collection = db["users"]
 def authenticate(username, password):
     if username and password:
         user = collection.find( {"username":username} )[0]
-        
-        print(user)
-        print(secrets.decrypt(user["password"]))
         if secrets.decrypt(user["password"]) == password:
             return True
         else:

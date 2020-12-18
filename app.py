@@ -1,6 +1,9 @@
+# dev server
+
 from flask import Flask, url_for, render_template, request, session, redirect, flash
 import database
 import secrets
+import sys
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = secrets.readSecret('secretkey')
@@ -18,12 +21,14 @@ def index():
                 todos = user['todos'],
                 num_of_todos = len(user['todos']))
         else:
+            
             session["username"] = ""
             session["password"] = ""
             return redirect(url_for('signup'))
     
     except:
         flash('an unknown error occured')
+        print(sys.exc_info()[0])
         return redirect(url_for('login'))
 
 
@@ -50,6 +55,7 @@ def login():
     
     except:
         flash('an unknown error occured')
+        print(sys.exc_info()[0])
         return render_template('error.html')
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -77,6 +83,7 @@ def signup():
 
             else:
                 flash('You must be at least 13 years old to sign up')
+                print(sys.exc_info()[0])
                 return redirect(url_for('signup'))
     except:
         return render_template('error.html')
@@ -94,6 +101,7 @@ def add_todo():
     
     except:
         flash('An error occured submiting your todo')
+        print(sys.exc_info()[0])
 
     return redirect(url_for('index'))
 
@@ -111,6 +119,7 @@ def logout():
 
     except:
         flash('There was an error logging you out')
+        print(sys.exc_info()[0])
         return redirect(url_for('index'))
 
 @app.route('/errortest')
@@ -120,6 +129,7 @@ def errortest():
 
     except:
         flash('testing error page')
+        print('test: ' + sys.exc_info()[0])
         return render_template('error.html')
 
 @app.errorhandler(404)
@@ -129,4 +139,4 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(debug=True)
